@@ -1,45 +1,6 @@
-import type { CharacterDef, DrawContext, MoodId } from '../../types/comic';
+import type { CharacterDef } from '../../types/comic';
 import { C } from '../palette';
-
-function drawFace(dc: DrawContext, x: number, mood: MoodId) {
-  const { p, d } = dc;
-
-  if (mood === 'happy') {
-    d(x + 4, 24, C.blk); d(x + 5, 24, C.blk);
-    d(x + 8, 24, C.blk); d(x + 9, 24, C.blk);
-    // Smile: corners UP (y=27), center DOWN (y=28) = ∪
-    d(x + 4, 27, C.blk); d(x + 9, 27, C.blk);
-    p(x + 5, 28, 4, 1, C.blk);
-  } else if (mood === 'surprised') {
-    p(x + 4, 23, 2, 3, C.blk); p(x + 8, 23, 2, 3, C.blk);
-    // O mouth — centered at x+6.5 (face center), 4px wide
-    p(x + 5, 27, 4, 2, C.blk); d(x + 6, 28, C.skin); d(x + 7, 28, C.skin);
-  } else if (mood === 'dead') {
-    d(x + 4, 23, C.red); d(x + 5, 24, C.red);
-    d(x + 5, 23, C.red); d(x + 4, 24, C.red);
-    d(x + 8, 23, C.red); d(x + 9, 24, C.red);
-    d(x + 9, 23, C.red); d(x + 8, 24, C.red);
-    p(x + 4, 28, 5, 1, C.blk);
-    d(x + 12, 19, C.cyan); d(x + 13, 18, C.cyan); d(x + 14, 17, C.cyan);
-  } else if (mood === 'angry') {
-    // Angry brows angled inward
-    d(x + 3, 22, C.blk); d(x + 4, 23, C.blk); d(x + 5, 23, C.blk);
-    d(x + 10, 22, C.blk); d(x + 9, 23, C.blk); d(x + 8, 23, C.blk);
-    d(x + 4, 24, C.blk); d(x + 5, 24, C.blk);
-    d(x + 8, 24, C.blk); d(x + 9, 24, C.blk);
-    // Frown: corners DROP DOWN (3 rows), clearly ∩ not ∪
-    d(x + 6, 27, C.blk); d(x + 7, 27, C.blk);
-    d(x + 5, 28, C.blk); d(x + 8, 28, C.blk);
-    d(x + 4, 29, C.blk); d(x + 9, 29, C.blk);
-  } else if (mood === 'smug') {
-    p(x + 4, 24, 2, 1, C.blk); p(x + 8, 24, 2, 1, C.blk);
-    p(x + 5, 27, 4, 1, C.blk); d(x + 9, 28, C.blk);
-  } else {
-    d(x + 4, 24, C.blk); d(x + 5, 24, C.blk);
-    d(x + 8, 24, C.blk); d(x + 9, 24, C.blk);
-    p(x + 5, 27, 4, 1, C.blk);
-  }
-}
+import { drawFace, drawShirtLabel } from './drawFace';
 
 export const pm: CharacterDef = {
   id: 'pm',
@@ -49,54 +10,70 @@ export const pm: CharacterDef = {
     const { p, d } = dc;
     const x = xOff;
 
-    // Hair (neat, side-parted)
-    p(x + 2, 19, 10, 3, C.hair_p);
-    p(x + 2, 19, 5, 1, '#a07850');
+    // Head silhouette
+    p(x + 1, 16, 12, 14, C.blk);
+    p(x, 23, 3, 3, C.blk);
+    p(x + 11, 23, 3, 3, C.blk);
 
-    // Face
-    p(x + 3, 22, 8, 8, C.skin);
-    p(x + 4, 21, 6, 1, C.skin);
+    // Hair — light brown, neat side part
+    p(x + 2, 17, 10, 4, C.hair_p);
+    p(x + 2, 17, 7, 1, '#a07848'); // part highlight
+    p(x + 2, 16, 8, 2, C.hair_p);  // top of head
+    d(x + 4, 17, '#c09060');        // shine
 
-    // Glasses
-    p(x + 3, 23, 3, 2, '#667');
-    p(x + 8, 23, 3, 2, '#667');
-    p(x + 6, 23, 2, 1, '#667');
-    // Lens shine
-    d(x + 4, 23, '#aac');
-    d(x + 9, 23, '#aac');
+    // Face skin + highlight
+    p(x + 2, 21, 10, 9, C.skin);
+    p(x + 2, 21, 3, 2, C.skin_hi);
+    d(x + 1, 24, C.skin); d(x + 1, 25, C.skin);
+    d(x + 12, 24, C.skin); d(x + 12, 25, C.skin);
 
-    // Ears
-    d(x + 2, 24, C.skin); d(x + 2, 25, C.skin);
-    d(x + 11, 24, C.skin); d(x + 11, 25, C.skin);
+    // Glasses (round wire frames)
+    p(x + 2, 22, 4, 3, '#8899bb');
+    p(x + 7, 22, 4, 3, '#8899bb');
+    p(x + 6, 23, 2, 1, '#8899bb'); // bridge
+    p(x + 3, 23, 2, 2, '#ccd8f0'); // left lens tint
+    p(x + 8, 23, 2, 2, '#ccd8f0'); // right lens tint
 
-    // Neck
+    // Neck + body
+    p(x, 30, 14, 10, C.blk);
     p(x + 5, 30, 4, 1, C.skin);
 
-    // Body (polo shirt)
-    p(x + 2, 31, 10, 8, C.shirt_p);
+    // Polo shirt
+    const sh = C.shirt_p;
+    const sh2 = '#a02020';
+    p(x + 1, 32, 12, 7, sh);
+    p(x + 1, 32, 2, 7, '#d04040');  // left highlight
+    p(x + 11, 32, 2, 7, sh2);        // right shadow
     // Collar
-    p(x + 3, 31, 2, 2, C.wh);
-    p(x + 9, 31, 2, 2, C.wh);
-    // Button line
-    p(x + 6, 31, 2, 5, C.wh);
+    p(x + 3, 32, 2, 2, C.wh);
+    p(x + 9, 32, 2, 2, C.wh);
+    p(x + 5, 32, 4, 1, C.wh);
     // Buttons
-    d(x + 6, 32, C.blk); d(x + 6, 34, C.blk);
+    d(x + 6, 33, sh2); d(x + 6, 35, sh2); d(x + 6, 37, sh2);
 
-    // Arms
-    p(x, 31, 2, 6, C.shirt_p);
-    p(x + 12, 31, 2, 6, C.shirt_p);
-    // Hands
-    p(x, 37, 2, 2, C.skin);
-    p(x + 12, 37, 2, 2, C.skin);
+    // Left arm + hand
+    p(x - 2, 32, 4, 7, C.blk);
+    p(x - 1, 33, 2, 5, sh);
+    p(x - 2, 38, 4, 3, C.blk);
+    p(x - 1, 39, 2, 1, C.skin);
+
+    // Right arm + hand
+    p(x + 12, 32, 4, 7, C.blk);
+    p(x + 13, 33, 2, 5, sh);
+    p(x + 12, 38, 4, 3, C.blk);
+    p(x + 13, 39, 2, 1, C.skin);
 
     // Legs (slacks)
-    p(x + 3, 39, 3, 5, C.pants);
-    p(x + 8, 39, 3, 5, C.pants);
+    const sl = '#3a4a5e';
+    p(x + 1, 40, 5, 6, C.blk); p(x + 2, 41, 3, 4, sl);
+    p(x + 8, 40, 5, 6, C.blk); p(x + 9, 41, 3, 4, sl);
 
     // Shoes (brown)
-    p(x + 2, 44, 4, 2, '#4a3020');
-    p(x + 8, 44, 4, 2, '#4a3020');
+    const shoe = '#5a3828';
+    p(x, 45, 7, 3, C.blk); p(x + 1, 46, 5, 1, '#7a5038');
+    p(x + 7, 45, 7, 3, C.blk); p(x + 8, 46, 5, 1, '#7a5038');
 
     drawFace(dc, x, mood);
+    drawShirtLabel(dc, x, 'PM');
   },
 };

@@ -1,37 +1,6 @@
-import type { CharacterDef, DrawContext, MoodId } from '../../types/comic';
+import type { CharacterDef } from '../../types/comic';
 import { C } from '../palette';
-
-function drawFace(dc: DrawContext, x: number, mood: MoodId) {
-  const { p, d } = dc;
-  if (mood === 'happy') {
-    d(x + 4, 24, C.blk); d(x + 5, 24, C.blk);
-    d(x + 8, 24, C.blk); d(x + 9, 24, C.blk);
-    d(x + 4, 27, C.blk); d(x + 9, 27, C.blk);
-    p(x + 5, 28, 4, 1, C.blk);
-  } else if (mood === 'surprised') {
-    p(x + 4, 23, 2, 3, C.blk); p(x + 8, 23, 2, 3, C.blk);
-    p(x + 5, 27, 4, 2, C.blk); d(x + 6, 28, C.skin); d(x + 7, 28, C.skin);
-  } else if (mood === 'dead') {
-    d(x + 4, 23, C.red); d(x + 5, 24, C.red); d(x + 5, 23, C.red); d(x + 4, 24, C.red);
-    d(x + 8, 23, C.red); d(x + 9, 24, C.red); d(x + 9, 23, C.red); d(x + 8, 24, C.red);
-    p(x + 4, 28, 5, 1, C.blk);
-  } else if (mood === 'angry') {
-    d(x + 3, 22, C.blk); d(x + 4, 23, C.blk); d(x + 5, 23, C.blk);
-    d(x + 10, 22, C.blk); d(x + 9, 23, C.blk); d(x + 8, 23, C.blk);
-    d(x + 4, 24, C.blk); d(x + 5, 24, C.blk);
-    d(x + 8, 24, C.blk); d(x + 9, 24, C.blk);
-    d(x + 6, 27, C.blk); d(x + 7, 27, C.blk);
-    d(x + 5, 28, C.blk); d(x + 8, 28, C.blk);
-    d(x + 4, 29, C.blk); d(x + 9, 29, C.blk);
-  } else if (mood === 'smug') {
-    p(x + 4, 24, 2, 1, C.blk); p(x + 8, 24, 2, 1, C.blk);
-    p(x + 5, 27, 4, 1, C.blk); d(x + 9, 28, C.blk);
-  } else {
-    d(x + 4, 24, C.blk); d(x + 5, 24, C.blk);
-    d(x + 8, 24, C.blk); d(x + 9, 24, C.blk);
-    p(x + 5, 27, 4, 1, C.blk);
-  }
-}
+import { drawFace, drawShirtLabel } from './drawFace';
 
 export const client: CharacterDef = {
   id: 'client',
@@ -41,45 +10,66 @@ export const client: CharacterDef = {
     const { p, d } = dc;
     const x = xOff;
 
-    // Hair — neat, combed, medium brown
-    p(x + 2, 19, 10, 3, '#5a3a20');
-    p(x + 3, 18, 8, 2, '#5a3a20');
-    p(x + 3, 19, 4, 1, '#7a5030'); // parting highlight
+    // Head silhouette
+    p(x + 1, 16, 12, 14, C.blk);
+    p(x, 23, 3, 3, C.blk);
+    p(x + 11, 23, 3, 3, C.blk);
+
+    // Hair — medium brown, neat side part
+    const hr = '#5a3820';
+    p(x + 2, 17, 10, 4, hr);
+    p(x + 2, 16, 9, 2, hr);
+    p(x + 3, 17, 5, 1, '#7a5030'); // part shine
 
     // Face
-    p(x + 3, 22, 8, 8, C.skin);
-    p(x + 4, 21, 6, 1, C.skin);
-    d(x + 2, 24, C.skin); d(x + 2, 25, C.skin);
-    d(x + 11, 24, C.skin); d(x + 11, 25, C.skin);
+    p(x + 2, 21, 10, 9, C.skin);
+    p(x + 2, 21, 3, 2, C.skin_hi);
+    d(x + 1, 24, C.skin); d(x + 1, 25, C.skin);
+    d(x + 12, 24, C.skin); d(x + 12, 25, C.skin);
 
-    // Neck
+    // Neck + body
+    p(x, 30, 14, 10, C.blk);
     p(x + 5, 30, 4, 1, C.skin);
 
     // Business casual — light blue shirt
-    p(x + 2, 31, 10, 8, '#4a7aaa');
-    // Collar
-    p(x + 4, 31, 2, 2, '#5a8aba');
-    p(x + 8, 31, 2, 2, '#5a8aba');
+    const sh = '#4a7aaa';
+    const sh2 = '#3a6090';
+    p(x + 1, 32, 12, 7, sh);
+    p(x + 1, 32, 2, 7, '#6a9acc');
+    p(x + 11, 32, 2, 7, sh2);
+    // Open collar
+    p(x + 4, 32, 2, 2, '#6a9acc');
+    p(x + 8, 32, 2, 2, '#6a9acc');
     // Buttons
-    d(x + 6, 32, C.wh); d(x + 6, 34, C.wh); d(x + 6, 36, C.wh);
+    d(x + 6, 33, C.wh); d(x + 6, 35, C.wh); d(x + 6, 37, C.wh);
 
-    // Arms
-    p(x, 31, 2, 6, '#4a7aaa');
-    p(x + 12, 31, 2, 6, '#4a7aaa');
-    p(x, 37, 2, 2, C.skin);
-    // Phone in right hand
-    p(x + 12, 35, 3, 5, '#111');
-    p(x + 12, 36, 3, 3, '#1a3a6e');
-    d(x + 13, 37, '#4a8aee');
+    // Left arm
+    p(x - 2, 32, 4, 7, C.blk);
+    p(x - 1, 33, 2, 5, sh);
+    p(x - 2, 38, 4, 3, C.blk);
+    p(x - 1, 39, 2, 1, C.skin);
 
-    // Pants (gray chinos)
-    p(x + 3, 39, 3, 5, '#8a8a9a');
-    p(x + 8, 39, 3, 5, '#8a8a9a');
+    // Right arm (holding smartphone)
+    p(x + 12, 32, 4, 7, C.blk);
+    p(x + 13, 33, 2, 5, sh);
+    p(x + 12, 38, 4, 3, C.blk);
+    p(x + 13, 39, 2, 1, C.skin);
+    // Phone
+    p(x + 13, 34, 4, 7, C.blk);
+    p(x + 14, 35, 2, 5, '#1a3a6e');
+    d(x + 14, 36, '#4a8aee'); d(x + 15, 37, '#4a8aee');
+    d(x + 14, 38, '#4a8aee');
 
-    // Loafers
-    p(x + 2, 44, 4, 2, '#5a3a20');
-    p(x + 8, 44, 4, 2, '#5a3a20');
+    // Legs (grey chinos)
+    const ch = '#8a8a9a';
+    p(x + 1, 40, 5, 6, C.blk); p(x + 2, 41, 3, 4, ch);
+    p(x + 8, 40, 5, 6, C.blk); p(x + 9, 41, 3, 4, ch);
+
+    // Brown loafers
+    p(x, 45, 7, 3, C.blk); p(x + 1, 46, 5, 1, '#7a4828');
+    p(x + 7, 45, 7, 3, C.blk); p(x + 8, 46, 5, 1, '#7a4828');
 
     drawFace(dc, x, mood);
+    drawShirtLabel(dc, x, 'CLIENT');
   },
 };

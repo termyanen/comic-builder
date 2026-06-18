@@ -1,38 +1,6 @@
-import type { CharacterDef, DrawContext, MoodId } from '../../types/comic';
+import type { CharacterDef } from '../../types/comic';
 import { C } from '../palette';
-
-function drawFace(dc: DrawContext, x: number, mood: MoodId) {
-  const { p, d } = dc;
-  if (mood === 'happy') {
-    d(x + 4, 24, C.blk); d(x + 5, 24, C.blk);
-    d(x + 8, 24, C.blk); d(x + 9, 24, C.blk);
-    d(x + 4, 27, C.blk); d(x + 9, 27, C.blk);
-    p(x + 5, 28, 4, 1, C.blk);
-  } else if (mood === 'surprised') {
-    p(x + 4, 23, 2, 3, C.blk); p(x + 8, 23, 2, 3, C.blk);
-    p(x + 5, 27, 4, 2, C.blk); d(x + 6, 28, C.skin); d(x + 7, 28, C.skin);
-  } else if (mood === 'dead') {
-    d(x + 4, 23, C.red); d(x + 5, 24, C.red); d(x + 5, 23, C.red); d(x + 4, 24, C.red);
-    d(x + 8, 23, C.red); d(x + 9, 24, C.red); d(x + 9, 23, C.red); d(x + 8, 24, C.red);
-    p(x + 4, 28, 5, 1, C.blk);
-    d(x + 12, 19, C.cyan); d(x + 13, 18, C.cyan); d(x + 14, 17, C.cyan);
-  } else if (mood === 'angry') {
-    d(x + 3, 22, C.blk); d(x + 4, 23, C.blk); d(x + 5, 23, C.blk);
-    d(x + 10, 22, C.blk); d(x + 9, 23, C.blk); d(x + 8, 23, C.blk);
-    d(x + 4, 24, C.blk); d(x + 5, 24, C.blk);
-    d(x + 8, 24, C.blk); d(x + 9, 24, C.blk);
-    d(x + 6, 27, C.blk); d(x + 7, 27, C.blk);
-    d(x + 5, 28, C.blk); d(x + 8, 28, C.blk);
-    d(x + 4, 29, C.blk); d(x + 9, 29, C.blk);
-  } else if (mood === 'smug') {
-    p(x + 4, 24, 2, 1, C.blk); p(x + 8, 24, 2, 1, C.blk);
-    p(x + 5, 27, 4, 1, C.blk); d(x + 9, 28, C.blk);
-  } else {
-    d(x + 4, 24, C.blk); d(x + 5, 24, C.blk);
-    d(x + 8, 24, C.blk); d(x + 9, 24, C.blk);
-    p(x + 5, 27, 4, 1, C.blk);
-  }
-}
+import { drawFace, drawShirtLabel } from './drawFace';
 
 export const devops: CharacterDef = {
   id: 'devops',
@@ -42,53 +10,74 @@ export const devops: CharacterDef = {
     const { p, d } = dc;
     const x = xOff;
 
-    // Headphones ON head (over hair)
-    p(x + 2, 17, 10, 2, '#222'); // band
-    p(x + 2, 19, 2, 4, '#333'); // left cup
-    p(x + 10, 19, 2, 4, '#333'); // right cup
-    d(x + 2, 20, '#14ffec'); d(x + 11, 20, '#14ffec'); // LED lights
+    // Headphones band (drawn before head silhouette)
+    p(x + 2, 15, 10, 2, '#1a1a1a');
 
-    // Hair (dark, short, under headphones)
-    p(x + 4, 19, 6, 3, '#1a1010');
+    // Head silhouette
+    p(x + 1, 16, 12, 14, C.blk);
+    p(x, 23, 3, 3, C.blk);
+    p(x + 11, 23, 3, 3, C.blk);
 
-    // Beard / stubble
-    p(x + 4, 28, 6, 2, '#2a1a10');
-    d(x + 3, 28, '#2a1a10'); d(x + 10, 28, '#2a1a10');
+    // Headphone cups over ears
+    p(x, 19, 3, 5, '#2a2a2a');
+    p(x + 11, 19, 3, 5, '#2a2a2a');
+    d(x + 1, 21, '#14ffec'); d(x + 12, 21, '#14ffec'); // LED accent
+
+    // Hair — very short / shaved sides
+    p(x + 2, 18, 10, 3, '#181818');
+    p(x + 4, 17, 6, 2, '#181818');
+
+    // Stubble / beard on chin
+    p(x + 3, 27, 8, 3, '#2a1a10');
+    p(x + 4, 29, 6, 1, '#3a2a18'); // lighter bottom
 
     // Face
-    p(x + 3, 22, 8, 8, C.skin);
-    p(x + 4, 21, 6, 1, C.skin);
-    d(x + 2, 24, C.skin); d(x + 2, 25, C.skin);
-    d(x + 11, 24, C.skin); d(x + 11, 25, C.skin);
+    p(x + 2, 21, 10, 9, C.skin);
+    p(x + 2, 21, 3, 2, C.skin_hi);
+    d(x + 1, 24, C.skin); d(x + 1, 25, C.skin);
+    d(x + 12, 24, C.skin); d(x + 12, 25, C.skin);
 
-    // Neck
+    // Neck + body
+    p(x, 30, 14, 10, C.blk);
     p(x + 5, 30, 4, 1, C.skin);
 
-    // Black turtleneck / ops shirt
-    p(x + 2, 31, 10, 8, '#111');
-    p(x + 4, 31, 6, 2, '#222'); // collar
-    // Infrared/terminal glow on chest
-    p(x + 5, 34, 4, 2, '#001a00');
-    d(x + 6, 35, '#00ff41'); d(x + 7, 34, '#00ff41');
-    d(x + 5, 34, '#00cc33');
+    // Black ops turtleneck
+    const bl = '#0f0f0f';
+    const bl2 = '#252525';
+    p(x + 1, 32, 12, 7, bl);
+    p(x + 1, 32, 2, 7, bl2);
+    p(x + 5, 30, 4, 3, bl);         // turtleneck rolls up
+    // Terminal glow on chest
+    p(x + 4, 34, 6, 3, '#001a00');
+    d(x + 5, 35, '#00ff41'); d(x + 6, 34, '#00ff41');
+    d(x + 7, 35, '#00cc33'); d(x + 8, 34, '#00ff41');
 
-    // Arms
-    p(x, 31, 2, 6, '#111');
-    p(x + 12, 31, 2, 6, '#111');
-    p(x, 37, 2, 2, C.skin);
-    p(x + 12, 37, 2, 2, C.skin);
+    // Left arm
+    p(x - 2, 32, 4, 7, C.blk);
+    p(x - 1, 33, 2, 5, bl);
+    p(x - 2, 38, 4, 3, C.blk);
+    p(x - 1, 39, 2, 1, C.skin);
 
-    // Cargo pants (dark)
-    p(x + 3, 39, 3, 5, '#2a2a3a');
-    p(x + 8, 39, 3, 5, '#2a2a3a');
+    // Right arm
+    p(x + 12, 32, 4, 7, C.blk);
+    p(x + 13, 33, 2, 5, bl);
+    p(x + 12, 38, 4, 3, C.blk);
+    p(x + 13, 39, 2, 1, C.skin);
+
+    // Cargo pants (dark grey)
+    const cp = '#2a2a3a';
+    p(x + 1, 40, 5, 6, C.blk); p(x + 2, 41, 3, 4, cp);
+    p(x + 8, 40, 5, 6, C.blk); p(x + 9, 41, 3, 4, cp);
     // Cargo pocket
-    p(x + 3, 40, 2, 2, '#333');
+    p(x + 2, 41, 2, 2, '#333'); p(x + 3, 42, 1, 1, cp);
 
-    // Boots
-    p(x + 2, 44, 4, 2, '#1a1a1a');
-    p(x + 8, 44, 4, 2, '#1a1a1a');
-    d(x + 2, 45, '#333'); d(x + 8, 45, '#333');
+    // Tactical boots
+    p(x, 45, 7, 3, C.blk); p(x + 1, 46, 5, 1, '#1a1a1a');
+    d(x + 1, 45, '#333'); d(x + 3, 45, '#333'); d(x + 5, 45, '#333');
+    p(x + 7, 45, 7, 3, C.blk); p(x + 8, 46, 5, 1, '#1a1a1a');
+    d(x + 8, 45, '#333'); d(x + 10, 45, '#333'); d(x + 12, 45, '#333');
 
     drawFace(dc, x, mood);
+    drawShirtLabel(dc, x, 'OPS', '#2a8a4a', 37);
   },
 };

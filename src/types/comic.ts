@@ -1,9 +1,9 @@
 /** Pixel unit size — all coordinates are in this grid */
-export const PIXEL = 4;
+export const PIXEL = 6;
 /** Panel canvas size in pixels */
-export const CANVAS_SIZE = 200;
+export const CANVAS_SIZE = 420;
 /** Grid units per panel side */
-export const GRID = 50;
+export const GRID = 70;
 /** Export image size */
 export const EXPORT_SIZE = 1080;
 

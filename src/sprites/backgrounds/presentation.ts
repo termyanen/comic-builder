@@ -6,68 +6,71 @@ export const presentation: BackgroundDef = {
   name: 'Presentation',
   nameRu: 'Презентация',
   draw({ p, d, t, ctx, S }) {
-    // Dark conference room
-    p(0, 0, 50, 50, '#080810');
-    p(0, 40, 50, 10, '#060608');
+    p(0, 0, 70, 57, '#06060c');
+    p(0, 57, 70, 13, '#040408');
+    p(0, 56, 70, 2, '#030306');
 
-    // Big projector screen
-    p(4, 4, 42, 28, '#111');
-    p(5, 5, 40, 26, '#eef');   // screen surface
-    // Slide content
-    p(6, 6, 38, 4, t.wallMid); // title bar
-    p(7, 7, 20, 2, C.wh);      // slide title text lines
-    d(29, 8, C.yellow); d(30, 8, C.yellow); d(31, 8, C.yellow); // highlight
+    // Projector screen
+    p(2, 2, 66, 44, C.blk);
+    p(3, 3, 64, 42, '#d8d8e8');
+    p(4, 4, 62, 6, t.wallMid);
+    p(5, 5, 36, 4, '#b0b0c0');
+    d(44, 6, '#504010'); d(46, 6, '#504010'); d(48, 6, '#504010');
 
-    // Slide body — chart going up
-    p(8, 12, 2, 14, '#aaa');  // Y axis
-    p(8, 25, 22, 2, '#aaa'); // X axis
-    p(10, 22, 3, 5, '#5b8def');
-    p(14, 19, 3, 8, '#5b8def');
-    p(18, 16, 3, 11, C.cyan);
-    p(22, 13, 3, 14, C.cyan);
-    p(26, 10, 3, 17, C.green);
-    // Trend arrow
-    d(10, 22, C.yellow); d(14, 19, C.yellow); d(18, 16, C.yellow);
-    d(22, 13, C.yellow); d(26, 10, C.yellow); d(28, 8, C.yellow);
-    d(29, 7, C.yellow); d(28, 7, C.yellow); // arrowhead
+    // Bar chart — muted blues/teals
+    p(6, 11, 2, 28, '#606068'); // Y axis
+    p(6, 37, 36, 2, '#606068'); // X axis
+    p(9, 30, 4, 9, '#2a3858'); d(9, 30, '#3a4868');
+    p(14, 25, 4, 14, '#2a3858'); d(14, 25, '#3a4868');
+    p(19, 20, 4, 19, '#1e4040'); d(19, 20, '#284848');
+    p(24, 16, 4, 23, '#1e4040'); d(24, 16, '#284848');
+    p(29, 12, 4, 27, '#1e3828'); d(29, 12, '#284838');
+    p(34, 8, 4, 31, '#1e3828'); d(34, 8, '#284838');
+    // Trend line — muted amber
+    d(11, 30, '#604820'); d(16, 25, '#604820'); d(21, 20, '#604820');
+    d(26, 16, '#604820'); d(31, 12, '#604820'); d(36, 8, '#604820');
+    d(37, 7, '#604820'); d(38, 6, '#604820');
+    d(37, 6, '#604820');
 
-    // Right side of slide — bullet points
-    p(32, 12, 10, 1, '#ccc');
-    p(32, 15, 8, 1, '#ccc');
-    p(32, 18, 9, 1, '#ccc');
-    d(31, 12, C.cyan); d(31, 15, C.cyan); d(31, 18, C.cyan); // bullets
+    // Bullet points — muted
+    d(44, 12, '#1e4040'); p(46, 12, 16, 2, '#8888a0');
+    d(44, 17, '#1e4040'); p(46, 17, 14, 2, '#8888a0');
+    d(44, 22, '#1e4040'); p(46, 22, 16, 2, '#8888a0');
+    d(44, 27, '#1e4040'); p(46, 27, 12, 2, '#8888a0');
+    p(44, 31, 18, 3, t.wallMid); d(45, 32, '#504010');
+    p(46, 33, 14, 2, '#606068');
 
-    // "Q4 RESULTS" mock text
-    p(33, 22, 8, 2, t.wallMid);
-    d(34, 23, C.yellow); d(35, 23, C.yellow); d(36, 23, C.yellow);
-
-    // Projector beam (subtle)
-    ctx.fillStyle = 'rgba(255,255,240,0.03)';
+    // Projector beam
+    ctx.fillStyle = 'rgba(255,255,240,0.025)';
     ctx.beginPath();
-    ctx.moveTo(25 * S, 0);
-    ctx.lineTo(5 * S, 4 * S);
-    ctx.lineTo(45 * S, 4 * S);
+    ctx.moveTo(35 * S, 0);
+    ctx.lineTo(3 * S, 2 * S);
+    ctx.lineTo(67 * S, 2 * S);
     ctx.closePath();
     ctx.fill();
 
-    // Projector body (ceiling mounted)
-    p(20, 0, 10, 3, '#222');
-    p(22, 3, 6, 1, '#333');
-    d(24, 1, C.yellow); d(25, 1, '#ff8800'); // lens
+    // Projector body
+    p(28, 0, 14, 4, C.blk);
+    p(29, 0, 12, 3, '#1a1a1a');
+    d(33, 1, '#504010'); d(35, 1, '#503008'); d(37, 1, '#501818');
+    p(31, 2, 8, 2, C.blk); p(32, 2, 6, 1, '#2a2a50');
 
-    // Podium / lectern
-    p(4, 32, 8, 10, '#1a1a2a');
-    p(5, 33, 6, 2, '#2a2a3a'); // top
-    p(6, 35, 4, 1, '#14ffec'); // mic base
-    // Microphone
-    p(7, 30, 2, 6, '#444');
-    p(7, 28, 2, 3, '#222');
+    // Podium
+    p(0, 38, 14, 16, C.blk);
+    p(1, 39, 12, 5, '#16162a');
+    p(1, 44, 12, 10, '#101020');
+    p(2, 43, 10, 1, '#0a2828');
+    p(6, 30, 3, 10, C.blk); p(7, 31, 1, 9, '#444');
+    p(5, 28, 5, 4, C.blk); p(6, 29, 3, 2, '#1a1a1a');
+    d(7, 28, '#555');
 
-    // Audience silhouettes (bottom)
-    for (let i = 0; i < 6; i++) {
-      const ax = 16 + i * 6;
-      p(ax, 38, 4, 6, '#0a0a14'); // body
-      p(ax + 1, 35, 2, 4, '#0d0d18'); // head
+    // Audience silhouettes
+    for (let i = 0; i < 8; i++) {
+      const ax = 14 + i * 7;
+      p(ax, 50, 5, 5, C.blk); p(ax + 1, 51, 3, 4, '#0a0a16');
+      p(ax - 1, 54, 7, 4, C.blk); p(ax, 55, 5, 3, '#080810');
     }
+
+    p(55, 4, 4, 3, '#ffffff12');
   },
 };

@@ -1,60 +1,6 @@
-import type { CharacterDef, DrawContext, MoodId } from '../../types/comic';
+import type { CharacterDef } from '../../types/comic';
 import { C } from '../palette';
-
-/**
- * Face layout on 8-wide face block (x+3..x+10):
- *   Eyes at y=24, mouth at y=27-28
- *   Left eye: x+4,x+5  |  Right eye: x+8,x+9 (symmetric: 1+2+2+2+2+1)
- *   Screen coords: y increases DOWN, so y=27 is ABOVE y=28
- */
-function drawFace(dc: DrawContext, x: number, mood: MoodId) {
-  const { p, d } = dc;
-
-  if (mood === 'happy') {
-    // Eyes: dots
-    d(x + 4, 24, C.blk); d(x + 5, 24, C.blk);
-    d(x + 8, 24, C.blk); d(x + 9, 24, C.blk);
-    // Smile: corners UP (y=27), center DOWN (y=28) = ∪
-    d(x + 4, 27, C.blk); d(x + 9, 27, C.blk);
-    p(x + 5, 28, 4, 1, C.blk);
-  } else if (mood === 'surprised') {
-    // Big round eyes
-    p(x + 4, 23, 2, 3, C.blk); p(x + 8, 23, 2, 3, C.blk);
-    // O mouth — centered at x+6.5 (face center), 4px wide
-    p(x + 5, 27, 4, 2, C.blk); d(x + 6, 28, C.skin); d(x + 7, 28, C.skin);
-  } else if (mood === 'dead') {
-    // X eyes
-    d(x + 4, 23, C.red); d(x + 5, 24, C.red);
-    d(x + 5, 23, C.red); d(x + 4, 24, C.red);
-    d(x + 8, 23, C.red); d(x + 9, 24, C.red);
-    d(x + 9, 23, C.red); d(x + 8, 24, C.red);
-    // Flat mouth
-    p(x + 4, 28, 5, 1, C.blk);
-    // Soul leaving
-    d(x + 12, 19, C.cyan); d(x + 13, 18, C.cyan); d(x + 14, 17, C.cyan);
-  } else if (mood === 'angry') {
-    // Angry brows (angled inward: \  /)
-    d(x + 3, 22, C.blk); d(x + 4, 23, C.blk); d(x + 5, 23, C.blk);
-    d(x + 10, 22, C.blk); d(x + 9, 23, C.blk); d(x + 8, 23, C.blk);
-    // Eyes
-    d(x + 4, 24, C.blk); d(x + 5, 24, C.blk);
-    d(x + 8, 24, C.blk); d(x + 9, 24, C.blk);
-    // Frown: corners DROP DOWN (3 rows), clearly ∩ not ∪
-    d(x + 6, 27, C.blk); d(x + 7, 27, C.blk);
-    d(x + 5, 28, C.blk); d(x + 8, 28, C.blk);
-    d(x + 4, 29, C.blk); d(x + 9, 29, C.blk);
-  } else if (mood === 'smug') {
-    // Half-closed eyes
-    p(x + 4, 24, 2, 1, C.blk); p(x + 8, 24, 2, 1, C.blk);
-    // Smirk: flat left, curving down on right
-    p(x + 5, 27, 4, 1, C.blk); d(x + 9, 28, C.blk);
-  } else {
-    // Neutral
-    d(x + 4, 24, C.blk); d(x + 5, 24, C.blk);
-    d(x + 8, 24, C.blk); d(x + 9, 24, C.blk);
-    p(x + 5, 27, 4, 1, C.blk);
-  }
-}
+import { drawFace, drawShirtLabel } from './drawFace';
 
 export const dev: CharacterDef = {
   id: 'dev',
@@ -64,47 +10,72 @@ export const dev: CharacterDef = {
     const { p, d } = dc;
     const x = xOff;
 
-    // Hair (messy/spiky)
-    p(x + 2, 19, 10, 3, C.hair_d);
-    p(x + 3, 18, 3, 1, C.hair_d);
-    p(x + 8, 18, 2, 1, C.hair_d);
-    d(x + 5, 17, C.hair_d);
+    // Head silhouette (hair + face as one black block)
+    p(x + 1, 16, 12, 14, C.blk);
+    // Left/right ear bumps
+    p(x, 23, 3, 3, C.blk);
+    p(x + 11, 23, 3, 3, C.blk);
 
-    // Face
-    p(x + 3, 22, 8, 8, C.skin);
-    p(x + 4, 21, 6, 1, C.skin);
+    // Hair — messy dark brown
+    p(x + 2, 17, 10, 4, C.hair_d);
+    p(x + 3, 16, 4, 2, C.hair_d);   // left tuft
+    p(x + 9, 16, 3, 1, C.hair_d);   // right spike
+    d(x + 6, 15, C.hair_d);          // center spike
+    // Hair highlight
+    d(x + 4, 17, '#5a3d2a');
 
-    // Ears
-    d(x + 2, 24, C.skin); d(x + 2, 25, C.skin);
-    d(x + 11, 24, C.skin); d(x + 11, 25, C.skin);
+    // Face skin + highlight
+    p(x + 2, 21, 10, 9, C.skin);
+    p(x + 2, 21, 3, 2, C.skin_hi);   // top-left highlight
+    d(x + 1, 24, C.skin); d(x + 1, 25, C.skin); // left ear skin
+    d(x + 12, 24, C.skin); d(x + 12, 25, C.skin); // right ear skin
 
-    // Neck
-    p(x + 5, 30, 4, 1, C.skin);
+    // Neck + body silhouette
+    p(x, 30, 14, 10, C.blk);
+    p(x + 5, 30, 4, 1, C.skin); // neck skin
 
-    // Body (hoodie)
-    p(x + 2, 31, 10, 8, C.shirt_d);
-    // Hoodie neckline
-    p(x + 4, 31, 6, 1, '#4a7cd8');
-    // Pocket
-    p(x + 4, 35, 6, 2, '#4a7cd8');
-    // Hood strings
+    // Hoodie
+    const hd = C.shirt_d;
+    const hd2 = '#3868c8';
+    p(x + 1, 32, 12, 7, hd);
+    p(x + 1, 32, 2, 7, '#5a8eef');   // left highlight
+    p(x + 11, 32, 2, 7, hd2);        // right shadow
+    // Kangaroo pocket
+    p(x + 3, 35, 8, 3, hd2);
+    p(x + 4, 36, 6, 1, hd);
+    // Collar strings
     d(x + 5, 32, C.wh); d(x + 8, 32, C.wh);
 
-    // Arms
-    p(x, 31, 2, 6, C.shirt_d);
-    p(x + 12, 31, 2, 6, C.shirt_d);
-    // Hands
-    p(x, 37, 2, 2, C.skin);
-    p(x + 12, 37, 2, 2, C.skin);
+    // Left arm + hand
+    p(x - 2, 32, 4, 7, C.blk);
+    p(x - 1, 33, 2, 5, hd);
+    p(x - 2, 38, 4, 3, C.blk);
+    p(x - 1, 39, 2, 1, C.skin);
+
+    // Right arm + hand
+    p(x + 12, 32, 4, 7, C.blk);
+    p(x + 13, 33, 2, 5, hd);
+    p(x + 12, 38, 4, 3, C.blk);
+    p(x + 13, 39, 2, 1, C.skin);
 
     // Legs (jeans)
-    p(x + 3, 39, 3, 5, C.pants);
-    p(x + 8, 39, 3, 5, C.pants);
+    p(x + 1, 40, 5, 6, C.blk); p(x + 2, 41, 3, 4, C.pants);
+    p(x + 8, 40, 5, 6, C.blk); p(x + 9, 41, 3, 4, C.pants);
+    // Jeans highlight
+    d(x + 2, 41, '#3a5070'); d(x + 9, 41, '#3a5070');
 
-    // Shoes
-    p(x + 2, 44, 4, 2, C.blk);
-    p(x + 8, 44, 4, 2, C.blk);
+    // Shoes (dark)
+    p(x, 45, 7, 3, C.blk); p(x + 1, 46, 5, 1, '#444');
+    p(x + 7, 45, 7, 3, C.blk); p(x + 8, 46, 5, 1, '#444');
 
     drawFace(dc, x, mood);
+
+    // Thick-frame glasses (drawn over face)
+    p(x + 2, 22, 5, 1, C.blk); p(x + 2, 25, 5, 1, C.blk);
+    p(x + 2, 22, 1, 4, C.blk); p(x + 6, 22, 1, 4, C.blk);
+    p(x + 7, 22, 5, 1, C.blk); p(x + 7, 25, 5, 1, C.blk);
+    p(x + 7, 22, 1, 4, C.blk); p(x + 11, 22, 1, 4, C.blk);
+
+    drawShirtLabel(dc, x, 'DEV');
   },
 };
