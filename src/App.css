@@ -1,0 +1,198 @@
+.app {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #14ffec;
+  font-size: 14px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.toolbar label {
+  color: #7ec8e3;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Shared form elements */
+select,
+input[type='text'] {
+  background: #1a1a2e;
+  border: 1px solid #16213e;
+  color: #e0e0e0;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  padding: 4px 8px;
+}
+select:focus,
+input:focus {
+  outline: 1px solid #14ffec;
+  border-color: #14ffec;
+}
+
+/* Buttons */
+.btn {
+  background: #16213e;
+  border: 1px solid #14ffec;
+  color: #14ffec;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  padding: 6px 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.btn:hover {
+  background: #14ffec;
+  color: #0f0f1a;
+}
+.btn-red {
+  border-color: #ff4444;
+  color: #ff4444;
+}
+.btn-red:hover {
+  background: #ff4444;
+  color: #0f0f1a;
+}
+
+/* Comic section */
+.series-tag {
+  color: #14ffec;
+  font-size: 10px;
+  text-align: center;
+  margin-bottom: 6px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.panels-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  background: #000;
+  border: 2px solid #222;
+  width: 100%;
+}
+.panel {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid #000;
+}
+.panel:hover {
+  border-color: #14ffec;
+}
+.panel.active {
+  border-color: #14ffec;
+}
+.panel canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+.strip-label {
+  color: #333;
+  font-size: 10px;
+  text-align: center;
+  margin-top: 6px;
+  letter-spacing: 2px;
+}
+
+/* Editor */
+.editor {
+  background: #16213e;
+  border: 1px solid #2a2a4a;
+  padding: 16px;
+  margin-top: 16px;
+}
+.editor-title {
+  color: #14ffec;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+.field {
+  margin-bottom: 12px;
+}
+.field:last-child {
+  margin-bottom: 0;
+}
+.field label {
+  display: block;
+  color: #7ec8e3;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.field input,
+.field select {
+  width: 100%;
+}
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.field-row .field {
+  margin-bottom: 0;
+}
+.hint {
+  color: #333;
+  font-size: 10px;
+  margin-top: 16px;
+  text-align: center;
+  line-height: 1.6;
+}
+.hint span {
+  color: #555;
+}
+
+/* Offset sliders */
+.offset-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.offset-row input[type='range'] {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: #1a1a2e;
+  border: 1px solid #16213e;
+  outline: none;
+}
+.offset-row input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: #14ffec;
+  cursor: pointer;
+}
+.offset-val {
+  color: #7ec8e3;
+  font-size: 10px;
+  min-width: 32px;
+  text-align: right;
+  font-family: 'Courier New', monospace;
+}
