@@ -602,6 +602,10 @@ select:focus, input:focus, textarea:focus { outline: 1px solid #14ffec; border-c
   .series-item-actions { opacity: 1; }
   select, input[type='text'], textarea, .author-input { font-size: 16px; }
   .btn { padding: 10px 14px; font-size: 14px; }
+  /* toolbar on the canvas tab stays compact — it's a dense strip of actions */
+  .main-header .btn { padding: 6px 9px; font-size: 12px; }
+  .main-header select, .main-header .author-input { font-size: 14px; padding: 5px 6px; }
+  .main-header .author-input { width: 84px; }
   .series-btn { width: 32px; height: 32px; font-size: 14px; }
   .mini-btn { font-size: 11px; padding: 3px 8px; }
   .field label { font-size: 12px; }
