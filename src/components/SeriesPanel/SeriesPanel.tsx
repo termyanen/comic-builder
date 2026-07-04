@@ -1,7 +1,19 @@
 import { useState } from 'react';
 import { useComicStore } from '../../store/comicStore';
 import type { SeriesEntry } from '../../store/comicStore';
-import { exportComic } from '../../rendering/ExportRenderer';
+import { exportComic } from '../../rendering/exportSvg';
+import { useT } from '../../i18n';
+import { VIEW } from '../../types/comic';
+import { PanelContent } from '../../svg/PanelContent';
+
+/** Static mini-preview of the strip's first panel */
+function SeriesThumb({ entry }: { entry: SeriesEntry }) {
+  return (
+    <svg className="series-thumb" viewBox={`0 0 ${VIEW} ${VIEW}`} pointerEvents="none">
+      <PanelContent panel={entry.strip.panels[0]} strip={entry.strip} uid={`th-${entry.id}`} />
+    </svg>
+  );
+}
 
 function formatDate(ts: number) {
   const d = new Date(ts);
@@ -11,6 +23,7 @@ function formatDate(ts: number) {
 
 function SeriesItem({ entry, active }: { entry: SeriesEntry; active: boolean }) {
   const { loadSeries, deleteSeries, updateSeriesEntry } = useComicStore();
+  const t = useT();
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState('');
   const [ep, setEp] = useState('');
@@ -35,7 +48,7 @@ function SeriesItem({ entry, active }: { entry: SeriesEntry; active: boolean }) 
 
   function handleDelete(e: React.MouseEvent) {
     e.stopPropagation();
-    if (window.confirm(`Удалить «${entry.strip.seriesName} ${entry.strip.episodeNumber}»?`)) {
+    if (window.confirm(`${t('deleteConfirm')} «${entry.strip.seriesName} ${entry.strip.episodeNumber}»?`)) {
       deleteSeries(entry.id);
     }
   }
@@ -56,7 +69,7 @@ function SeriesItem({ entry, active }: { entry: SeriesEntry; active: boolean }) 
             className="series-edit-input"
             value={name}
             onChange={e => setName(e.target.value)}
-            placeholder="Название"
+            placeholder={t('namePlaceholder')}
             autoFocus
           />
           <input
@@ -72,14 +85,15 @@ function SeriesItem({ entry, active }: { entry: SeriesEntry; active: boolean }) 
         </div>
       ) : (
         <>
+          <SeriesThumb entry={entry} />
           <div className="series-item-body">
             <div className="series-item-title">{entry.strip.seriesName}</div>
             <div className="series-item-sub">{entry.strip.episodeNumber} · {formatDate(entry.updatedAt)}</div>
           </div>
           <div className="series-item-actions">
-            <button className="series-btn" title="Export PNG" onClick={handleExport}>↓</button>
-            <button className="series-btn" title="Переименовать" onClick={startEdit}>✎</button>
-            <button className="series-btn series-btn-del" title="Удалить" onClick={handleDelete}>✕</button>
+            <button className="series-btn" title={t('exportPngTitle')} onClick={handleExport}>↓</button>
+            <button className="series-btn" title={t('renameTitle')} onClick={startEdit}>✎</button>
+            <button className="series-btn series-btn-del" title={t('deleteTitle')} onClick={handleDelete}>✕</button>
           </div>
         </>
       )}
@@ -89,13 +103,14 @@ function SeriesItem({ entry, active }: { entry: SeriesEntry; active: boolean }) 
 
 export function SeriesPanel() {
   const { seriesList, activeSeriesId, newSeries } = useComicStore();
+  const t = useT();
   const sorted = [...seriesList].sort((a, b) => b.updatedAt - a.updatedAt);
 
   return (
     <div className="series-panel">
       <div className="series-panel-header">
-        <span className="series-panel-title">Серии</span>
-        <button className="series-new-btn" onClick={newSeries} title="Новая серия">+ Новая</button>
+        <span className="series-panel-title">{t('series')}</span>
+        <button className="series-new-btn" onClick={newSeries} title={t('newSeriesTitle')}>{t('newSeries')}</button>
       </div>
       <div className="series-list">
         {sorted.map(entry => (

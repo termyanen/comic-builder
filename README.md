@@ -1,50 +1,56 @@
-# React + TypeScript + Vite
+# 💥 Comic Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Make 4-panel dev comics without drawing skills.** Runs in the browser, free, no backend.
 
-Currently, two official plugins are available:
+🇷🇺 [Русская версия](README.ru.md) · **[Try it live →](https://termyanen.github.io/comic-builder/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Example strip](landing/examples/example-2.png)
 
-## Expanding the ESLint configuration
+## What's inside
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **12 characters** — dev, AI robot, senior, PM, boss, QA, designer, devops, intern, client, HR and a cat. 9 poses, 8 moods, gaze direction, quarter body turn, items held in hands, per-series custom outfits.
+- **Comic language** — speech bubbles with voices (shout, thought, whisper, robo), a terminal window with command chips, yellow approval buttons, big BAM! lettering, comic effects (impact, sweat, zzz, focus lines).
+- **Script → strip** — type a plain-text script (`hero angry: line`) and the strip assembles itself. Works in English and Russian.
+- **Direct manipulation** — drag characters, bubbles, bubble tails, effects and captions right in the panel. Undo/redo, arrow-key nudging, panel copy/swap, scene templates (built-in + your own).
+- **Platform-ready export** — 1080×1080 square (Instagram/Threads), vertical 1×4 strip (Telegram), per-panel carousel — or all of them with one click. Fonts are embedded into the export, strips save/load as JSON.
+- **No backend** — everything lives in your browser's localStorage.
 
-- Configure the top-level `parserOptions` property like this:
+## Quick start
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm install
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Node 22+. Production build: `npm run build` (static files in `dist/`).
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Text script format
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
+title: Standup
+episode: #002
+
+panel 1
+bg: office, theme sand
+hero happy typing: Done, the feature is ready!
+robot: Check before deploy?
+
+panel 2
+terminal: Checking... | Problems found: 0 | $ ship-it
+```
+
+Each panel starts with `panel N`. A speech line is `who [mood] [pose]: text` — the first mentioned character stands on the right, the second on the left, tails point at the speaker automatically. Special lines: `bg`, `theme`, `caption`, `fx`, `terminal` (rows split by `|`), `button`.
+
+## Architecture notes
+
+- React + TypeScript + Vite + Zustand, rendering is pure SVG (no canvas).
+- A character is data, not an image: poses are limb paths, emotions are a face layer, outfits are colors. A new character is a ~10-line file registered in `src/svg/characters/`.
+- PNG export serializes the SVG with the webfont embedded as base64 — otherwise the rasterizer silently falls back to a system font.
+
+## Credits
+
+The visual language is inspired by the classic minimalist web-comic tradition. Font: [Balsamiq Sans](https://fonts.google.com/specimen/Balsamiq+Sans) (OFL).
+
+## License
+
+MIT — see [LICENSE](LICENSE).
