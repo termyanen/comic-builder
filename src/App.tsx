@@ -7,7 +7,21 @@ import { useComicStore } from './store/comicStore';
 import { preloadExportAssets } from './rendering/exportSvg';
 import { getDragBase, buildDragUpdate } from './dragMath';
 import type { DragKind } from './dragMath';
+import { useT } from './i18n';
 import './App.css';
+
+function useIsMobile(): boolean {
+  const [mobile, setMobile] = useState(() => window.matchMedia('(max-width: 768px)').matches);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)');
+    const onChange = (e: MediaQueryListEvent) => setMobile(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  return mobile;
+}
+
+type MobileTab = 'series' | 'canvas' | 'editor';
 
 function isTextTarget(el: EventTarget | null): boolean {
   return el instanceof HTMLElement && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
@@ -26,9 +40,9 @@ const COL_RANGE = { left: [150, 380], right: [260, 520] } as const;
 function loadCols(): { left: number; right: number } {
   try {
     const raw = localStorage.getItem(COLS_KEY);
-    if (raw) return { left: 210, right: 300, ...JSON.parse(raw) };
+    if (raw) return { left: 220, right: 330, ...JSON.parse(raw) };
   } catch { /* corrupted — fall through to defaults */ }
-  return { left: 210, right: 300 };
+  return { left: 220, right: 330 };
 }
 
 /** Draggable vertical divider between the columns */
@@ -93,6 +107,9 @@ export default function App() {
   }, []);
 
   const [cols, setCols] = useState(loadCols);
+  const isMobile = useIsMobile();
+  const [tab, setTab] = useState<MobileTab>('canvas');
+  const t = useT();
 
   function resize(side: 'left' | 'right', dx: number) {
     setCols(prev => {
@@ -104,6 +121,42 @@ export default function App() {
       localStorage.setItem(COLS_KEY, JSON.stringify(next));
       return next;
     });
+  }
+
+  if (isMobile) {
+    const tabs: { id: MobileTab; icon: string; label: string }[] = [
+      { id: 'series', icon: '🗂', label: t('tabSeries') },
+      { id: 'canvas', icon: '💥', label: t('tabCanvas') },
+      { id: 'editor', icon: '🎛', label: t('tabEditor') },
+    ];
+    return (
+      <div className="app app-mobile">
+        <div className="mobile-content">
+          {tab === 'series' && <SeriesPanel />}
+          {tab === 'canvas' && (
+            <div className="main-content">
+              <div className="main-header">
+                <span className="app-title">[ COMIC BUILDER ]</span>
+                <Toolbar />
+              </div>
+              <ComicGrid />
+              <button className="btn mobile-edit-btn" onClick={() => setTab('editor')}>
+                {t('editPanelBtn')}
+              </button>
+            </div>
+          )}
+          {tab === 'editor' && <EditorSidebar />}
+        </div>
+        <nav className="tabbar">
+          {tabs.map(tb => (
+            <button key={tb.id} className={tab === tb.id ? 'active' : ''} onClick={() => setTab(tb.id)}>
+              <span className="ticon">{tb.icon}</span>
+              {tb.label}
+            </button>
+          ))}
+        </nav>
+      </div>
+    );
   }
 
   return (

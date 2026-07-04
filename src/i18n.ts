@@ -127,6 +127,12 @@ const STR = {
     hint1: 'Клик по панели → редактировать',
     hint2: 'Export → PNG 1080×1080 для Instagram/Threads/Telegram',
 
+    // Mobile tabs
+    tabSeries: 'Серии',
+    tabCanvas: 'Холст',
+    tabEditor: 'Панель',
+    editPanelBtn: '✎ Настроить панель',
+
     // Scenario modal
     scenarioModalTitle: 'Сценарий → стрип',
     scenarioHint: 'Каждая панель — «панель N». Реплика: «кто [настроение] [поза]: текст». Первый упомянутый персонаж встаёт справа, второй — слева. Спецстроки: фон, тема, подпись, эффект, терминал (строки через |), кнопка.',
@@ -251,6 +257,11 @@ const STR = {
     captionXY: 'Caption X / Y',
     hint1: 'Click a panel → edit',
     hint2: 'Export → 1080×1080 PNG for Instagram/Threads/Telegram',
+
+    tabSeries: 'Series',
+    tabCanvas: 'Canvas',
+    tabEditor: 'Panel',
+    editPanelBtn: '✎ Edit panel',
 
     scenarioModalTitle: 'Script → strip',
     scenarioHint: 'Each panel starts with "panel N". A line: "who [mood] [pose]: text". The first mentioned character stands right, the second — left. Special lines: bg, theme, caption, fx, terminal (lines split by |), button.',
