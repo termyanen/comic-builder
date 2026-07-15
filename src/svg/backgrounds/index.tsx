@@ -355,7 +355,96 @@ const alert: BackgroundDef = {
   ),
 };
 
-const backgrounds: BackgroundDef[] = [plain, hills, desk, office, openspace, meeting, kanban, server, home, bedroom, coffeeshop, night, alert, presentation];
+const portal: BackgroundDef = {
+  id: 'portal',
+  name: 'Time portal',
+  nameRu: 'Портал',
+  render: colors => (
+    <g>
+      <rect x={0} y={0} width={VIEW} height={VIEW} fill={colors.sky} />
+      <GroundEdge colors={colors} d={`M 0 304 Q 105 298 210 302 Q 315 306 420 300`} />
+      {/* glow halo */}
+      <ellipse cx={210} cy={174} rx={120} ry={146} fill="#B7A8E0" opacity={0.35} />
+      {/* ring and vortex */}
+      <ellipse cx={210} cy={174} rx={97} ry={126} fill="#5C4E86" stroke={INK} strokeWidth={STROKE.face} />
+      <ellipse cx={210} cy={174} rx={64} ry={90} fill="#8E7CC3" />
+      <ellipse cx={210} cy={174} rx={31} ry={47} fill="#CFC4EE" />
+      {/* swirl arcs */}
+      <g fill="none" stroke="#B7A8E0" strokeWidth={5} strokeLinecap="round">
+        <path d="M 150 122 q 40 -26 86 -6" />
+        <path d="M 134 198 q 22 44 68 46" />
+        <path d="M 262 232 q 22 -34 12 -76" />
+      </g>
+      {/* sparks */}
+      <g fill="#F5D547">
+        {[[84, 90], [332, 74], [116, 272], [320, 250], [210, 22]].map(([x, y]) => (
+          <path key={`${x}-${y}`} d={`M ${x} ${y - 6} L ${x + 2} ${y - 2} L ${x + 6} ${y} L ${x + 2} ${y + 2} L ${x} ${y + 6} L ${x - 2} ${y + 2} L ${x - 6} ${y} L ${x - 2} ${y - 2} Z`} />
+        ))}
+      </g>
+      {/* crackle bolts off the rim */}
+      <g fill="none" stroke="#8E7CC3" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M 98 158 l -16 6 l 10 9" />
+        <path d="M 322 190 l 16 -6 l -10 -9" />
+      </g>
+    </g>
+  ),
+};
+
+const retro: BackgroundDef = {
+  id: 'retro',
+  name: 'Year 2000',
+  nameRu: '2000-е',
+  render: colors => (
+    <g>
+      <rect x={0} y={0} width={VIEW} height={VIEW} fill={colors.sky} />
+      <GroundEdge colors={colors} d={`M 0 302 Q 105 296 210 300 Q 315 304 420 298`} />
+      {/* desk */}
+      <rect x={26} y={252} width={200} height={16} rx={7} fill="#C98F5A" stroke={INK} strokeWidth={STROKE.face} />
+      <line x1={52} y1={268} x2={52} y2={348} stroke={INK} strokeWidth={7} strokeLinecap="round" />
+      <line x1={202} y1={268} x2={202} y2={348} stroke={INK} strokeWidth={7} strokeLinecap="round" />
+      {/* bulky CRT monitor */}
+      <rect x={72} y={156} width={104} height={88} rx={8} fill="#E8E0C9" stroke={INK} strokeWidth={STROKE.face} />
+      <rect x={84} y={166} width={80} height={54} rx={4} fill="#7EC8E3" stroke={INK} strokeWidth={2.5} />
+      {/* win-98 style window */}
+      <rect x={92} y={174} width={60} height={38} fill="#FFFFFF" stroke={INK} strokeWidth={2} />
+      <rect x={92} y={174} width={60} height={9} fill="#3D8EB9" stroke={INK} strokeWidth={2} />
+      <path d="M 98 192 h 28 M 98 200 h 42" stroke="#9FB6C4" strokeWidth={3} strokeLinecap="round" />
+      {/* vents + power led + wedge stand */}
+      <path d="M 80 232 h 20" stroke="#B8AE93" strokeWidth={3} strokeLinecap="round" />
+      <circle cx={164} cy={233} r={3} fill="#8FD6A8" />
+      <path d="M 106 244 L 102 252 H 146 L 142 244 Z" fill="#E8E0C9" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+      {/* floppy on the desk */}
+      <g transform="rotate(-8 46 241)">
+        <rect x={35} y={230} width={22} height={22} rx={2} fill="#3B3B4A" stroke={INK} strokeWidth={2.5} />
+        <rect x={40} y={232} width={12} height={7} fill="#8A8A8A" />
+        <rect x={39} y={242} width={14} height={9} fill="#FFFFFF" />
+      </g>
+      {/* tower on the floor, modem with lights on top */}
+      <rect x={252} y={176} width={46} height={124} rx={6} fill="#E8E0C9" stroke={INK} strokeWidth={STROKE.face} />
+      <path d="M 260 192 h 30 M 260 204 h 30" stroke={INK} strokeWidth={3} strokeLinecap="round" />
+      <circle cx={275} cy={274} r={6} fill="none" stroke={INK} strokeWidth={3} />
+      <circle cx={275} cy={252} r={2.8} fill="#8FD6A8" />
+      <rect x={256} y={158} width={38} height={18} rx={4} fill="#8A8A8A" stroke={INK} strokeWidth={3} />
+      <circle cx={266} cy={167} r={2.8} fill="#8FD6A8" />
+      <circle cx={276} cy={167} r={2.8} fill="#E03C31" />
+      {/* wall calendar: the year 2000 */}
+      <line x1={352} y1={38} x2={352} y2={52} stroke={INK} strokeWidth={3} />
+      <rect x={310} y={52} width={84} height={80} rx={6} fill="#FFFFFF" stroke={INK} strokeWidth={STROKE.face} />
+      <path d="M 310 70 h 84" stroke={INK} strokeWidth={3} />
+      <rect x={310} y={52} width={84} height={18} rx={6} fill="#E03C31" stroke={INK} strokeWidth={3} />
+      {/* "2000" */}
+      <g fill="none" stroke={INK} strokeWidth={4.5} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M 318 86 Q 318 79 325 79 Q 332 79 332 86 Q 332 92 317 102 H 333" />
+        <ellipse cx={346} cy={91} rx={7} ry={11} />
+        <ellipse cx={362} cy={91} rx={7} ry={11} />
+        <ellipse cx={378} cy={91} rx={7} ry={11} />
+      </g>
+      <path d="M 320 114 h 18 M 346 114 h 24 M 320 123 h 30 M 358 123 h 16" stroke="#9FB6C4" strokeWidth={3} strokeLinecap="round" />
+    </g>
+  ),
+};
+
+const backgrounds: BackgroundDef[] = [plain, hills, desk, office, openspace, meeting, kanban, server, home, bedroom, coffeeshop, night, alert, presentation, portal, retro];
 
 export function getBackground(id: BackgroundId): BackgroundDef | undefined {
   return backgrounds.find(b => b.id === id);

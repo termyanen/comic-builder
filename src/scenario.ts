@@ -60,7 +60,8 @@ const BGS: [RegExp, BackgroundId][] = [
   [/офис|office/i, 'office'], [/переговор|митинг|meeting/i, 'meeting'], [/канбан|доск|kanban|board/i, 'kanban'],
   [/сервер|server/i, 'server'], [/спальн|кроват|bedroom|bed/i, 'bedroom'], [/дом|home/i, 'home'],
   [/кофейн|кафе|coffee|cafe/i, 'coffeeshop'], [/ночь|night/i, 'night'], [/авари|пожар|сирен|alert|fire/i, 'alert'],
-  [/презентац|экран|presentation|screen/i, 'presentation'], [/пуст|чист|plain|empty/i, 'plain'],
+  [/презентац|экран|presentation|screen/i, 'presentation'], [/портал|воронк|portal/i, 'portal'],
+  [/2000|ретро|миллениум|нулев|retro|y2k/i, 'retro'], [/пуст|чист|plain|empty/i, 'plain'],
 ];
 
 const THEMES: [RegExp, BgThemeId][] = [
