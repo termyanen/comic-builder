@@ -14,7 +14,7 @@ export type BgThemeId = 'peach' | 'sky' | 'aqua' | 'sand' | 'mint' | 'lavender' 
 export type MoodId = 'happy' | 'laugh' | 'surprised' | 'dead' | 'angry' | 'neutral' | 'smug' | 'sad';
 export type PoseId = 'stand' | 'walk' | 'sit' | 'typing' | 'swing' | 'point' | 'facepalm' | 'celebrate' | 'shrug';
 export type BackgroundId = 'plain' | 'hills' | 'desk' | 'office' | 'meeting' | 'server' | 'home' | 'coffeeshop' | 'night' | 'presentation'
-  | 'kanban' | 'openspace' | 'bedroom' | 'alert';
+  | 'kanban' | 'openspace' | 'bedroom' | 'alert' | 'portal' | 'retro';
 export type PropId = 'none' | 'bat' | 'laptop' | 'coffee' | 'phone' | 'wreck'
   | 'scroll' | 'fire' | 'bug' | 'chart' | 'pizza' | 'beer' | 'trophy' | 'money' | 'stars' | 'ticket'
   | 'duck' | 'button' | 'clock' | 'energy' | 'headphones' | 'box' | 'docs';
