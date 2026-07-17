@@ -14,10 +14,10 @@ export type BgThemeId = 'peach' | 'sky' | 'aqua' | 'sand' | 'mint' | 'lavender' 
 export type MoodId = 'happy' | 'laugh' | 'surprised' | 'dead' | 'angry' | 'neutral' | 'smug' | 'sad';
 export type PoseId = 'stand' | 'walk' | 'sit' | 'typing' | 'swing' | 'point' | 'facepalm' | 'celebrate' | 'shrug';
 export type BackgroundId = 'plain' | 'hills' | 'desk' | 'office' | 'meeting' | 'server' | 'home' | 'coffeeshop' | 'night' | 'presentation'
-  | 'kanban' | 'openspace' | 'bedroom' | 'alert' | 'portal' | 'retro';
+  | 'kanban' | 'openspace' | 'bedroom' | 'alert' | 'portal' | 'retro' | 'stadium' | 'tvnight';
 export type PropId = 'none' | 'bat' | 'laptop' | 'coffee' | 'phone' | 'wreck'
   | 'scroll' | 'fire' | 'bug' | 'chart' | 'pizza' | 'beer' | 'trophy' | 'money' | 'stars' | 'ticket'
-  | 'duck' | 'button' | 'clock' | 'energy' | 'headphones' | 'box' | 'docs';
+  | 'duck' | 'button' | 'clock' | 'energy' | 'headphones' | 'box' | 'docs' | 'ball' | 'scarf' | 'sofa';
 /** Comic-effect overlay: emotion/attention marks floating in the panel */
 export type FxId = 'none' | 'idea' | 'question' | 'exclaim' | 'zzz' | 'sweat' | 'anger' | 'hearts' | 'focus'
   | 'impact' | 'hit' | 'boom' | 'dash' | 'dizzy';

@@ -345,7 +345,66 @@ const docs: PropDef = {
   ),
 };
 
-const props: PropDef[] = [bat, laptop, duck, coffee, energy, phone, headphones, clock, button, scroll, fire, bug, chart, ticket, docs, box, pizza, beer, trophy, money, stars, wreck];
+const ball: PropDef = {
+  id: 'ball',
+  name: 'Soccer ball',
+  nameRu: 'Футбольный мяч',
+  render: () => (
+    <g>
+      <circle cx={0} cy={-17} r={17} fill="#FFFFFF" stroke={INK} strokeWidth={STROKE.face} />
+      {/* center pentagon + seams */}
+      <path d="M 0 -25 L 7.6 -19.5 L 4.7 -10.5 L -4.7 -10.5 L -7.6 -19.5 Z" fill={INK} />
+      <g fill="none" stroke={INK} strokeWidth={2.5} strokeLinecap="round">
+        <path d="M 0 -25 L 0 -33.5" />
+        <path d="M 7.6 -19.5 L 15.5 -22.5" />
+        <path d="M -7.6 -19.5 L -15.5 -22.5" />
+        <path d="M 4.7 -10.5 L 9.5 -3.5" />
+        <path d="M -4.7 -10.5 L -9.5 -3.5" />
+      </g>
+      {/* rim patches */}
+      <path d="M -16.5 -21 a 17 17 0 0 1 4.5 -9.5 l 4.5 5 -2 6.5 Z" fill={INK} opacity={0.85} />
+      <path d="M 16.5 -21 a 17 17 0 0 0 -4.5 -9.5 l -4.5 5 l 2 6.5 Z" fill={INK} opacity={0.85} />
+    </g>
+  ),
+};
+
+const scarf: PropDef = {
+  id: 'scarf',
+  name: 'Fan scarf',
+  nameRu: 'Шарф болельщика',
+  render: () => (
+    <g transform="rotate(-6)">
+      <rect x={-38} y={-27} width={76} height={19} rx={4} fill="#E03C31" stroke={INK} strokeWidth={STROKE.face} />
+      <path d="M -26 -27 v 19 M -10 -27 v 19 M 6 -27 v 19 M 22 -27 v 19" stroke="#FFFFFF" strokeWidth={6} />
+      {/* fringe */}
+      <g stroke={INK} strokeWidth={2.5} strokeLinecap="round">
+        <path d="M -38 -24 l -7 -2 M -38 -18 l -8 0 M -38 -12 l -7 2" />
+        <path d="M 38 -24 l 7 -2 M 38 -18 l 8 0 M 38 -12 l 7 2" />
+      </g>
+    </g>
+  ),
+};
+
+/** Seat top at −24 matches the sit pose (hips at −20): a seated character reads as on the couch */
+const sofa: PropDef = {
+  id: 'sofa',
+  name: 'Sofa',
+  nameRu: 'Диван',
+  render: () => (
+    <g>
+      {/* backrest */}
+      <rect x={-74} y={-88} width={148} height={64} rx={13} fill="#C98F8F" stroke={INK} strokeWidth={STROKE.face} />
+      {/* seat cushion */}
+      <rect x={-74} y={-24} width={148} height={24} rx={9} fill="#B57F7F" stroke={INK} strokeWidth={STROKE.face} />
+      <line x1={0} y1={-22} x2={0} y2={-4} stroke={INK} strokeWidth={2.5} opacity={0.4} />
+      {/* armrests */}
+      <rect x={-92} y={-52} width={24} height={52} rx={11} fill="#C98F8F" stroke={INK} strokeWidth={STROKE.face} />
+      <rect x={68} y={-52} width={24} height={52} rx={11} fill="#C98F8F" stroke={INK} strokeWidth={STROKE.face} />
+    </g>
+  ),
+};
+
+const props: PropDef[] = [bat, laptop, duck, coffee, energy, phone, headphones, clock, button, scroll, fire, bug, chart, ticket, docs, box, pizza, beer, trophy, money, stars, wreck, ball, scarf, sofa];
 
 export function getProp(id: PropId): PropDef | undefined {
   return props.find(p => p.id === id);
