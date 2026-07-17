@@ -444,7 +444,113 @@ const retro: BackgroundDef = {
   ),
 };
 
-const backgrounds: BackgroundDef[] = [plain, hills, desk, office, openspace, meeting, kanban, server, home, bedroom, coffeeshop, night, alert, presentation, portal, retro];
+const CROWD = ['#E03C31', '#F5D547', '#7EC8E3', '#E38FA8', '#8FD6A8'];
+
+const stadium: BackgroundDef = {
+  id: 'stadium',
+  name: 'Stadium',
+  nameRu: 'Стадион',
+  render: colors => (
+    <g>
+      <rect x={0} y={0} width={VIEW} height={VIEW} fill={colors.sky} />
+      {/* floodlight towers */}
+      <g stroke={INK} strokeWidth={5} strokeLinecap="round">
+        <line x1={64} y1={140} x2={64} y2={72} />
+        <line x1={356} y1={140} x2={356} y2={72} />
+      </g>
+      <g fill="#F5D547" stroke={INK} strokeWidth={3}>
+        <rect x={38} y={48} width={52} height={24} rx={6} />
+        <rect x={330} y={48} width={52} height={24} rx={6} />
+      </g>
+      <g fill="#FFFFFF">
+        {[50, 64, 78, 342, 356, 370].map(x => (
+          <g key={x}>
+            <circle cx={x} cy={55} r={2.6} />
+            <circle cx={x} cy={65} r={2.6} />
+          </g>
+        ))}
+      </g>
+      {/* stands with crowd */}
+      <rect x={0} y={140} width={VIEW} height={56} fill="#C9D4DC" />
+      {Array.from({ length: 15 }, (_, i) => (
+        <circle key={`c1-${i}`} cx={14 + i * 28} cy={158} r={7} fill={CROWD[i % 5]} stroke={INK} strokeWidth={2} />
+      ))}
+      {Array.from({ length: 15 }, (_, i) => (
+        <circle key={`c2-${i}`} cx={28 + i * 28} cy={180} r={7} fill={CROWD[(i + 2) % 5]} stroke={INK} strokeWidth={2} />
+      ))}
+      {/* pennant bunting along the stand top */}
+      <line x1={0} y1={132} x2={VIEW} y2={132} stroke={INK} strokeWidth={3} />
+      {Array.from({ length: 10 }, (_, i) => (
+        <path key={`p-${i}`} d={`M ${8 + i * 42} 132 L ${24 + i * 42} 132 L ${16 + i * 42} 147 Z`}
+          fill={CROWD[i % 5]} stroke={INK} strokeWidth={2} strokeLinejoin="round" />
+      ))}
+      {/* pitch */}
+      <rect x={0} y={196} width={VIEW} height={VIEW - 196} fill="#7DCB8A" />
+      <line x1={0} y1={196} x2={VIEW} y2={196} stroke="#4CAF7D" strokeWidth={5} strokeLinecap="round" />
+      <g stroke="#FFFFFF" strokeWidth={4} fill="none" opacity={0.9}>
+        <line x1={140} y1={196} x2={124} y2={420} />
+        <ellipse cx={130} cy={330} rx={64} ry={24} />
+      </g>
+      {/* goal with net */}
+      <g>
+        <g stroke="#EAF4F8" strokeWidth={2.5} opacity={0.9}>
+          {[334, 348, 362, 376, 390].map(x => <line key={x} x1={x} y1={210} x2={x} y2={266} />)}
+          {[224, 238, 252].map(y => <line key={y} x1={322} y1={y} x2={404} y2={y} />)}
+        </g>
+        <path d="M 322 268 V 208 H 404 V 268" fill="none" stroke={INK} strokeWidth={5} strokeLinejoin="round" />
+      </g>
+    </g>
+  ),
+};
+
+const tvnight: BackgroundDef = {
+  id: 'tvnight',
+  name: 'Night match',
+  nameRu: 'Ночной матч',
+  render: () => (
+    <g>
+      <rect x={0} y={0} width={VIEW} height={VIEW} fill="#313A5C" />
+      <path d={`M 0 300 Q 105 294 210 298 Q 315 302 420 296 L 420 420 L 0 420 Z`} fill="#3E4668" />
+      <path d={`M 0 300 Q 105 294 210 298 Q 315 302 420 296`} fill="none" stroke="#565F85" strokeWidth={5} strokeLinecap="round" />
+      {/* window: deep night outside */}
+      <rect x={40} y={44} width={92} height={76} rx={8} fill="#26304E" stroke={INK} strokeWidth={STROKE.face} />
+      <line x1={86} y1={46} x2={86} y2={118} stroke={INK} strokeWidth={3} />
+      <circle cx={66} cy={68} r={11} fill="#F5EFDC" />
+      <circle cx={71} cy={64} r={9} fill="#26304E" />
+      <path d="M 106 62 l 1.4 3.2 l 3.2 1.4 l -3.2 1.4 l -1.4 3.2 l -1.4 -3.2 l -3.2 -1.4 l 3.2 -1.4 Z" fill="#F5EFDC" />
+      <path d="M 116 92 l 1.2 2.6 l 2.6 1.2 l -2.6 1.2 l -1.2 2.6 l -1.2 -2.6 l -2.6 -1.2 l 2.6 -1.2 Z" fill="#F5EFDC" />
+      {/* wall clock: three in the morning */}
+      <circle cx={206} cy={68} r={21} fill="#F5EFDC" stroke={INK} strokeWidth={3.5} />
+      <line x1={206} y1={68} x2={206} y2={54} stroke={INK} strokeWidth={3} strokeLinecap="round" />
+      <line x1={206} y1={68} x2={216} y2={68} stroke={INK} strokeWidth={3} strokeLinecap="round" />
+      <circle cx={206} cy={68} r={2} fill={INK} />
+      {/* glow spilling from the screen into the room */}
+      <path d="M 268 166 L 96 128 L 96 296 L 268 234 Z" fill="#7EC8E3" opacity={0.13} />
+      {/* TV on a low stand, broadcasting the match */}
+      <rect x={258} y={150} width={144} height={94} rx={8} fill="#2E2E2E" stroke={INK} strokeWidth={STROKE.face} />
+      <rect x={266} y={158} width={128} height={78} rx={4} fill="#4CAF7D" />
+      <g stroke="#FFFFFF" strokeWidth={2.5} fill="none" opacity={0.85}>
+        <line x1={330} y1={158} x2={330} y2={236} />
+        <circle cx={330} cy={197} r={13} />
+      </g>
+      <circle cx={300} cy={206} r={4} fill="#E03C31" />
+      <circle cx={356} cy={190} r={4} fill="#7EC8E3" />
+      <circle cx={338} cy={214} r={2.8} fill="#FFFFFF" />
+      {/* score bug */}
+      <rect x={272} y={163} width={36} height={11} rx={2} fill="#1F2937" />
+      <circle cx={279} cy={168.5} r={2.2} fill="#E03C31" />
+      <rect x={285} y={166} width={4} height={5} fill="#FFFFFF" />
+      <rect x={293} y={166} width={4} height={5} fill="#FFFFFF" />
+      <circle cx={301} cy={168.5} r={2.2} fill="#7EC8E3" />
+      {/* stand */}
+      <rect x={272} y={244} width={116} height={11} rx={5} fill="#C98F5A" stroke={INK} strokeWidth={3.5} />
+      <line x1={288} y1={255} x2={288} y2={296} stroke={INK} strokeWidth={5} strokeLinecap="round" />
+      <line x1={372} y1={255} x2={372} y2={296} stroke={INK} strokeWidth={5} strokeLinecap="round" />
+    </g>
+  ),
+};
+
+const backgrounds: BackgroundDef[] = [plain, hills, desk, office, openspace, meeting, kanban, server, home, bedroom, coffeeshop, night, tvnight, stadium, alert, presentation, portal, retro];
 
 export function getBackground(id: BackgroundId): BackgroundDef | undefined {
   return backgrounds.find(b => b.id === id);

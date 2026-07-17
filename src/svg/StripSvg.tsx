@@ -28,11 +28,13 @@ export function PanelExportSvg({ strip, index, fontCss }: { strip: ComicStrip; i
       {fontCss && <style>{fontCss}</style>}
       <rect x={0} y={0} width={EXPORT_SIZE} height={EXPORT_SIZE} fill="#fff" />
       <g transform={`translate(${left}, ${TOP}) scale(${scale})`}>
+        {/* carousel panels are standalone images, so every one carries the tag */}
         <PanelContent panel={strip.panels[index]} strip={strip} uid={`exs-${index}`}
-          cornerTag={index === 3 && strip.showCornerTag ? `@${(strip.authorTag ?? strip.seriesName).toUpperCase()}` : undefined} />
+          cornerTag={strip.showCornerTag ? `@${(strip.authorTag ?? strip.seriesName).toUpperCase()}` : undefined} />
       </g>
       {strip.showWatermark && (
-        <text x={left + size - 6} y={EXPORT_SIZE - 10} textAnchor="end" fill={INK} opacity={0.85}
+        // inset keeps the caption clear of rounded-corner crops in feeds
+        <text x={left + size - 26} y={EXPORT_SIZE - 10} textAnchor="end" fill={INK} opacity={0.85}
           fontFamily={FONT.hand} fontWeight={700} fontSize={16}>
           {strip.seriesName} · {strip.episodeNumber} · {index + 1}/4
         </text>
