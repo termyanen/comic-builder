@@ -404,7 +404,47 @@ const sofa: PropDef = {
   ),
 };
 
-const props: PropDef[] = [bat, laptop, duck, coffee, energy, phone, headphones, clock, button, scroll, fire, bug, chart, ticket, docs, box, pizza, beer, trophy, money, stars, wreck, ball, scarf, sofa];
+/** Broadcast on screen: pitch + two team flags (FRA left, ENG right) + live dot */
+const tv: PropDef = {
+  id: 'tv',
+  name: 'TV with match',
+  nameRu: 'Телевизор с матчем',
+  render: () => (
+    <g>
+      {/* cabinet: feet, body, doors with knobs */}
+      <rect x={-46} y={-6} width={10} height={6} fill="#C9A87F" stroke={INK} strokeWidth={2.5} />
+      <rect x={36} y={-6} width={10} height={6} fill="#C9A87F" stroke={INK} strokeWidth={2.5} />
+      <rect x={-55} y={-36} width={110} height={30} rx={6} fill="#C9A87F" stroke={INK} strokeWidth={STROKE.face} />
+      <line x1={0} y1={-34} x2={0} y2={-8} stroke={INK} strokeWidth={2.5} opacity={0.5} />
+      <circle cx={-8} cy={-21} r={2.5} fill={INK} />
+      <circle cx={8} cy={-21} r={2.5} fill={INK} />
+      {/* body */}
+      <rect x={-60} y={-120} width={120} height={84} rx={10} fill="#2E2E2E" stroke={INK} strokeWidth={STROKE.face} />
+      {/* screen: green pitch */}
+      <rect x={-52} y={-112} width={104} height={68} rx={5} fill="#8CC48A" />
+      <line x1={0} y1={-112} x2={0} y2={-44} stroke="#FFFFFF" strokeWidth={2.5} opacity={0.8} />
+      <circle cx={0} cy={-78} r={11} fill="none" stroke="#FFFFFF" strokeWidth={2.5} opacity={0.8} />
+      {/* FRA flag */}
+      <g>
+        <rect x={-44} y={-106} width={8} height={15} fill="#4A6FB5" />
+        <rect x={-36} y={-106} width={8} height={15} fill="#FFFFFF" />
+        <rect x={-28} y={-106} width={8} height={15} fill="#D95D5D" />
+        <rect x={-44} y={-106} width={24} height={15} rx={2} fill="none" stroke={INK} strokeWidth={2.5} />
+      </g>
+      {/* ENG flag */}
+      <g>
+        <rect x={20} y={-106} width={24} height={15} rx={2} fill="#FFFFFF" />
+        <rect x={29} y={-106} width={6} height={15} fill="#D95D5D" />
+        <rect x={20} y={-101} width={24} height={5} fill="#D95D5D" />
+        <rect x={20} y={-106} width={24} height={15} rx={2} fill="none" stroke={INK} strokeWidth={2.5} />
+      </g>
+      {/* live dot */}
+      <circle cx={0} cy={-103} r={3.5} fill="#D95D5D" stroke={INK} strokeWidth={2} />
+    </g>
+  ),
+};
+
+const props: PropDef[] = [bat, laptop, duck, coffee, energy, phone, headphones, clock, button, scroll, fire, bug, chart, ticket, docs, box, pizza, beer, trophy, money, stars, wreck, ball, scarf, sofa, tv];
 
 export function getProp(id: PropId): PropDef | undefined {
   return props.find(p => p.id === id);

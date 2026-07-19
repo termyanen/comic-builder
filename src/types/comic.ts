@@ -17,7 +17,7 @@ export type BackgroundId = 'plain' | 'hills' | 'desk' | 'office' | 'meeting' | '
   | 'kanban' | 'openspace' | 'bedroom' | 'alert' | 'portal' | 'retro' | 'stadium' | 'tvnight';
 export type PropId = 'none' | 'bat' | 'laptop' | 'coffee' | 'phone' | 'wreck'
   | 'scroll' | 'fire' | 'bug' | 'chart' | 'pizza' | 'beer' | 'trophy' | 'money' | 'stars' | 'ticket'
-  | 'duck' | 'button' | 'clock' | 'energy' | 'headphones' | 'box' | 'docs' | 'ball' | 'scarf' | 'sofa';
+  | 'duck' | 'button' | 'clock' | 'energy' | 'headphones' | 'box' | 'docs' | 'ball' | 'scarf' | 'sofa' | 'tv';
 /** Comic-effect overlay: emotion/attention marks floating in the panel */
 export type FxId = 'none' | 'idea' | 'question' | 'exclaim' | 'zzz' | 'sweat' | 'anger' | 'hearts' | 'focus'
   | 'impact' | 'hit' | 'boom' | 'dash' | 'dizzy';
